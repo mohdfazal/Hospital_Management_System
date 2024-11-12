@@ -33,6 +33,42 @@ public class PatientController { // Declares the PatientController class.
         return "Patient information added via @RequestBody"; // Returns a success message confirming the patient was added.
     }
 
+    @PutMapping("/updatePatientDetails")
+    public String updatePatientDetails(@RequestBody Patient patient){
+        int key = patient.getPatientId();
+        if (patientDb.containsKey(key)){
+            patientDb.put(key,patient);
+            return "Patient details updated successfully";
+        }
+        return "Data does not exist";
+    }
+
+    @PutMapping("/updateDisease")
+    public String updateDisease(@RequestParam("patientId") Integer patientId, @RequestParam("disease") String disease){
+
+        if(patientDb.containsKey(patientId)){
+            Patient patient = patientDb.get(patientId);
+            patient.setDisease(disease);
+            patientDb.put(patientId,patient);
+
+            return "Disease updated successfully for patient ID: " + patientId;
+        }
+        else {
+            // Return an error message if the patient ID does not exist.
+            return "Patient not found with ID: " + patientId;
+        }
+    }
+
+    @DeleteMapping("/deletePatient")
+    public String deletePatient(@RequestParam("patientId") Integer patientId){
+        if (patientDb.containsKey(patientId)) {
+            patientDb.remove(patientId);
+            return "Patient has been deleted";
+        } else {
+            return "Patient not found";
+        }
+    }
+
     @GetMapping("/getPatientInfo") // Maps this method to handle HTTP GET requests at the "/getPatientInfo" URL.
     public Patient getPatient(@RequestParam("patientId") Integer patientId) { // Defines the getPatient method, which expects a "patientId" parameter from the request URL.
 
@@ -40,6 +76,27 @@ public class PatientController { // Declares the PatientController class.
 
         return patient; // Returns the retrieved Patient object. If no Patient with this ID exists, it returns null.
     }
+    @GetMapping("/getPatientViaPathVariable/{patientId}")
+    public Patient getPatientInfo(@PathVariable("patientId") Integer patientId){
+        Patient patient = patientDb.get(patientId);
+        return patient;
+    }
+
+    @GetMapping("/getPatientsByAgeAndDisease/{age}/{disease}")
+    public List<Patient> getPatientsByAgeAndDisease(@PathVariable("age") Integer age,
+                                                    @PathVariable("disease") String disease) {
+        List<Patient> matchingPatients = new ArrayList<>();
+
+        // Iterate through each patient in the database to find matches
+        for (Patient patient : patientDb.values()) {
+            if (patient.getAge() > age && patient.getDisease().equals(disease)) {
+                matchingPatients.add(patient);
+            }
+        }
+
+        return matchingPatients;
+    }
+
 
     @GetMapping("/getAllPatients") // Maps this method to handle HTTP GET requests at the "/getAllPatients" URL.
     public List<Patient> getAllPatients() { // Declares a method that returns a list of Patient objects.
@@ -53,6 +110,7 @@ public class PatientController { // Declares the PatientController class.
         return patients; // Returns the list of all patients. This list will be converted to JSON and sent as the response.
     }
     // Maps HTTP GET requests to "/getPatientByName" to this method.
+
     @GetMapping("/getPatientByName")
     public Patient getPatientByName(@RequestParam("name") String name) {
 
