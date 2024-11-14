@@ -20,4 +20,11 @@ public class DoctorController {
         Doctor doctor = doctorDb.get(doctorID);
         return doctor;
     }
+//    @GetMapping("/getDoctorViaRequestParam")
+//    public Doctor getDoctorViaRequestParam(@RequestParam("doctorId") Integer doctorId){
+//
+//        return doctor;
+//    }
+
 }
+

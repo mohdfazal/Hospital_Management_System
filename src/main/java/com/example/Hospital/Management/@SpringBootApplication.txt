@@ -36,3 +36,24 @@ In this example:
 You don't need to manually configure things like web servers or database connections—Spring Boot does it for you!
 Why is it useful?
 It makes setting up a Spring application much easier because you don't have to configure everything manually. It’s perfect for quickly getting a Spring application up and running.
+
+
+now we are going to learn about Spring Framework Architecture which deal with many many layer , let's discuss each
+
+    1. Controller Layer :
+        * Annotation : @RestController
+        * Responsibility : Accept HTTP request and  Handled HTTP request and Interact with "Service Layer".
+
+    2. Service Layer :
+        * Annotation : @Service
+        * Responsibility : Perform Business logic , Validate data and coordinate data flow between the controller and
+          Repository layer.
+
+    3. Repository Layer
+        * Annotation : @Repository
+        * Responsibility : Define Method to perform CRUD operations , often using Spring Data JPA.
+
+        @Repository
+        public interface PatientRepository extends JpaRepository<Patient, Integer> {
+            // JpaRepository provides default methods for CRUD
+        }
