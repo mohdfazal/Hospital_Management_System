@@ -1,5 +1,6 @@
-package com.example.Hospital.Management; // Declares the package name, grouping related classes under this namespace.
+package com.example.Hospital.Management.Controllers; // Declares the package name, grouping related classes under this namespace.
 
+import com.example.Hospital.Management.Models.Patient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -9,7 +10,9 @@ import java.util.List;
 @RestController // Indicates that this class is a REST controller that handles HTTP requests and returns JSON responses.
 public class PatientController { // Declares the PatientController class.
 
-    HashMap<Integer, Patient> patientDb = new HashMap<>(); // Creates an in-memory database (HashMap) to store patients with Integer keys (patientId) and Patient objects as values.
+    HashMap<Integer, Patient> patientDb = new HashMap<>(); // Creates an in-memory database (HashMap)
+                                                           // to store patients with Integer keys (patientId)
+                                                           //and Patient objects as values.
 
     @PostMapping("/addPatientViaParameters") // Maps this method to a POST request at the URL "/addPatientViaParameters".
     public String addPatient(@RequestParam("patientId") Integer patientId, @RequestParam("name") String name,
@@ -92,7 +95,7 @@ public class PatientController { // Declares the PatientController class.
             if (patient.getAge() > age && patient.getDisease().equals(disease)) {
                 matchingPatients.add(patient);
             }
-        }
+        }  
 
         return matchingPatients;
     }

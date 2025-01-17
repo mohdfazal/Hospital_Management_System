@@ -1,8 +1,8 @@
-package com.example.Hospital.Management;
+package com.example.Hospital.Management.Controllers;
 
+import com.example.Hospital.Management.Models.Doctor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.Doc;
 import java.util.HashMap;
 //@RequestMapping("/doctor")
 @RestController
